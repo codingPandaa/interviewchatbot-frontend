@@ -1,0 +1,517 @@
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f6f8;
+  color: #1f2937;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1100px;
+  height: calc(100vh - 40px);
+  min-height: 400px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.chat-header {
+  flex-shrink: 0;
+  padding: 20px 24px;
+  color: #ffffff;
+  background: #1f2937;
+}
+
+.header-title {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.header-subtitle {
+  margin-top: 8px;
+  color: #d1d5db;
+  font-size: 13px;
+}
+
+.chat-messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 24px;
+  background: #ffffff;
+}
+
+.message-row {
+  display: flex;
+  width: 100%;
+  margin-bottom: 22px;
+}
+
+.user-row {
+  justify-content: flex-end;
+}
+
+.bot-row {
+  justify-content: flex-start;
+}
+
+.message {
+  min-width: 0;
+  max-width: 90%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.user-message {
+  color: #ffffff;
+  background: #2563eb;
+  border-bottom-right-radius: 3px;
+  white-space: pre-wrap;
+}
+
+.bot-message {
+  width: fit-content;
+  max-width: 100%;
+  color: #1f2937;
+  background: #f3f4f6;
+  border-bottom-left-radius: 3px;
+}
+
+.bot-message > :first-child {
+  margin-top: 0;
+}
+
+.bot-message > :last-child {
+  margin-bottom: 0;
+}
+
+/* Markdown headings and text */
+
+.bot-message h1,
+.bot-message h2,
+.bot-message h3,
+.bot-message h4 {
+  margin: 20px 0 10px;
+  color: #111827;
+  line-height: 1.4;
+}
+
+.bot-message h1 {
+  font-size: 22px;
+}
+
+.bot-message h2 {
+  font-size: 19px;
+}
+
+.bot-message h3 {
+  font-size: 17px;
+}
+
+.bot-message p {
+  margin: 10px 0;
+}
+
+.bot-message ul,
+.bot-message ol {
+  padding-left: 24px;
+  margin: 10px 0;
+}
+
+.bot-message li {
+  margin-bottom: 6px;
+}
+
+.bot-message blockquote {
+  margin: 12px 0;
+  padding: 8px 14px;
+  color: #4b5563;
+  border-left: 4px solid #9ca3af;
+  background: #e5e7eb;
+}
+
+.bot-message a {
+  color: #2563eb;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+.bot-message table {
+  display: block;
+  max-width: 100%;
+  margin: 12px 0;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.bot-message th,
+.bot-message td {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  text-align: left;
+}
+
+.bot-message th {
+  background: #e5e7eb;
+}
+
+/* Inline code */
+
+.bot-message :not(pre) > code {
+  padding: 2px 6px;
+  color: #b42318;
+  background: #e5e7eb;
+  border-radius: 4px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono",
+    monospace;
+  font-size: 0.9em;
+}
+
+/* Code block wrapper */
+
+.code-block-wrapper {
+  width: 100%;
+  max-width: 100%;
+  margin: 16px 0;
+  overflow: hidden;
+  color: #f8fafc;
+  background: #1e1e1e;
+  border: 1px solid #383838;
+  border-radius: 10px;
+}
+
+/* Code block header */
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 42px;
+  padding: 7px 12px;
+  background: #2b2b2b;
+  border-bottom: 1px solid #444444;
+}
+
+.code-language {
+  color: #d1d5db;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  text-transform: lowercase;
+}
+
+/* Copy code button */
+
+.copy-code-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 6px 10px;
+  color: #ffffff !important;
+  background: #383838 !important;
+  border: 1px solid #666666 !important;
+  border-radius: 5px;
+  font-size: 12px;
+  line-height: 1.4;
+  cursor: pointer;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: static;
+}
+
+.copy-code-button:hover {
+  background: #4b5563 !important;
+}
+
+.copy-code-button:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.copy-code-button:active {
+  transform: scale(0.98);
+}
+
+/* Code content */
+
+.code-block-wrapper pre {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 !important;
+  padding: 16px;
+  overflow-x: auto;
+  color: #f8fafc;
+  background: #1e1e1e !important;
+  border: none;
+  border-radius: 0;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono",
+    monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  white-space: pre;
+  tab-size: 4;
+}
+
+.code-block-wrapper pre code {
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  white-space: pre;
+}
+
+/* Thinking indicator */
+
+.thinking {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.dots {
+  display: inline-flex;
+}
+
+.dots span {
+  animation: blink 1.4s infinite both;
+}
+
+.dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%,
+  80%,
+  100% {
+    opacity: 0.2;
+  }
+
+  40% {
+    opacity: 1;
+  }
+}
+
+/* Chat input */
+
+.chat-input-container {
+  display: flex;
+  flex-shrink: 0;
+  gap: 12px;
+  padding: 16px 20px;
+  background: #ffffff;
+  border-top: 1px solid #e5e7eb;
+}
+
+.chat-input-container input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  color: #111827;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+}
+
+.chat-input-container input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+
+.chat-input-container input:disabled {
+  background: #f3f4f6;
+  cursor: not-allowed;
+}
+
+.chat-input-container button {
+  flex-shrink: 0;
+  padding: 0 22px;
+  color: #ffffff;
+  background: #2563eb;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chat-input-container button:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.chat-input-container button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Scrollbar */
+
+.chat-messages::-webkit-scrollbar,
+.code-block-wrapper pre::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.code-block-wrapper pre::-webkit-scrollbar-thumb {
+  background: #555555;
+  border-radius: 10px;
+}
+
+/* Responsive layout */
+
+@media (max-width: 768px) {
+  .app {
+    padding: 0;
+  }
+
+  .chat-container {
+    height: 100vh;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+  }
+
+  .chat-header {
+    padding: 16px;
+  }
+
+  .header-title {
+    font-size: 19px;
+  }
+
+  .header-subtitle {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .chat-messages {
+    padding: 16px 12px;
+  }
+
+  .message {
+    max-width: 96%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .bot-message {
+    max-width: 100%;
+  }
+
+  .code-block-wrapper {
+    width: 100%;
+  }
+
+  .code-block-wrapper pre {
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  .chat-input-container {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .chat-input-container input {
+    padding: 11px;
+  }
+
+  .chat-input-container button {
+    padding: 0 16px;
+  }
+}
+
+
+/* Keep bot responses left-aligned */
+.bot-message {
+  text-align: left;
+}
+
+/* Keep Markdown content left-aligned */
+.bot-message p,
+.bot-message ul,
+.bot-message ol,
+.bot-message li,
+.bot-message h1,
+.bot-message h2,
+.bot-message h3,
+.bot-message h4,
+.bot-message blockquote {
+  text-align: left;
+}
+
+/* Keep code and its header aligned correctly */
+.code-block-wrapper {
+  text-align: left;
+}
+
+.code-block-header {
+  text-align: left;
+}
+
+.code-language {
+  text-align: left;
+}
+
+.code-block-wrapper pre {
+  text-align: left;
+}
+
+.code-block-wrapper pre code {
+  text-align: left;
+}
+
+/* Keep inline code aligned with surrounding text */
+.bot-message :not(pre) > code {
+  text-align: left;
+}
